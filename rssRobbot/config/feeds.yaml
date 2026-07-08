@@ -1,0 +1,36 @@
+groups:
+  - id: tech
+    name: 技术
+    color: "#3B82F6"
+  - id: news
+    name: 新闻
+    color: "#EF4444"
+  - id: blog
+    name: 博客
+    color: "#10B981"
+
+subscriptions:
+  - id: tech-001
+    title: "阮一峰的网络日志"
+    feed_url: "https://www.ruanyifeng.com/blog/atom.xml"
+    group_id: tech
+    polling_interval: 1440
+    enabled: true
+  - id: tech-002
+    title: "Hacker News"
+    feed_url: "https://news.ycombinator.com/rss"
+    group_id: tech
+    polling_interval: 60
+    enabled: true
+  - id: news-001
+    title: "新华网"
+    feed_url: "http://www.xinhuanet.com/rss.htm"
+    group_id: news
+    polling_interval: 30
+    enabled: true
+  - id: blog-001
+    title: "张小龙的饭否"
+    feed_url: "https://fanfou.com/statuses/user_timeline/1.json"
+    group_id: blog
+    polling_interval: 120
+    enabled: true

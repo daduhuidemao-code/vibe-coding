@@ -1,0 +1,21 @@
+database:
+  url: postgresql://rss_user:rss_password@db:5432/rss_db
+
+notification:
+  email:
+    enabled: false
+    smtp_host: smtp.example.com
+    smtp_port: 587
+    smtp_user: user@example.com
+    smtp_password: password
+    smtp_from: rss-robot@example.com
+    smtp_tls: true
+  webhook:
+    enabled: false
+    url: https://webhook.example.com/callback
+    method: POST
+
+app:
+  cors_origins:
+    - http://localhost:3000
+    - http://localhost:8000
