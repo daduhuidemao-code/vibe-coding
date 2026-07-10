@@ -53,3 +53,8 @@ def get_email_config() -> Dict:
 def get_webhook_config() -> Dict:
     app_config = get_app_config()
     return app_config.get("notification", {}).get("webhook", {})
+
+
+def get_summary_config() -> Dict:
+    app_config = get_app_config()
+    return app_config.get("summary", {"enabled": True, "max_length": 200})

@@ -2,6 +2,7 @@ import feedparser
 from datetime import datetime
 from typing import List, Dict, Optional
 from schemas import ArticleBase
+from .summarizer import generate_summary
 
 
 def parse_rss_feed(feed_url: str) -> Dict:
@@ -14,11 +15,17 @@ def parse_rss_feed(feed_url: str) -> Dict:
     }
     
     for entry in feed.entries:
+        content = get_entry_content(entry)
+        summary = entry.get("summary", "")
+        
+        if not summary and content:
+            summary = generate_summary(content)
+        
         article = ArticleBase(
             title=entry.get("title", ""),
             link=entry.get("link", ""),
-            content=get_entry_content(entry),
-            summary=entry.get("summary", ""),
+            content=content,
+            summary=summary,
             published_at=parse_datetime(entry.get("published"))
         )
         result["articles"].append(article)

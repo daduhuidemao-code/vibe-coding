@@ -1,7 +1,8 @@
 import smtplib
+import time
 from email.mime.text import MIMEText
 from email.mime.multipart import MIMEMultipart
-from typing import List
+from typing import List, Dict
 from schemas import Article
 from config import get_email_config, get_webhook_config
 import requests
@@ -52,6 +53,10 @@ def send_webhook_notification(articles: List[Article]) -> bool:
     try:
         url = config["url"]
         method = config.get("method", "POST").upper()
+        headers = config.get("headers", {})
+        timeout = config.get("timeout", 10)
+        max_retries = config.get("max_retries", 3)
+        retry_delay = config.get("retry_delay", 5)
         
         payload = {
             "count": len(articles),
@@ -63,11 +68,26 @@ def send_webhook_notification(articles: List[Article]) -> bool:
                     "published_at": article.published_at.isoformat() if article.published_at else None
                 }
                 for article in articles
-            ]
+            ],
+            "timestamp": time.time()
         }
         
-        response = requests.request(method, url, json=payload)
-        return response.status_code == 200
+        session = requests.Session()
+        session.headers.update(headers)
+        
+        for attempt in range(max_retries):
+            try:
+                response = session.request(method, url, json=payload, timeout=timeout)
+                if response.status_code in [200, 201, 202, 204]:
+                    return True
+                print(f"Webhook attempt {attempt + 1} failed with status {response.status_code}")
+            except requests.exceptions.RequestException as e:
+                print(f"Webhook attempt {attempt + 1} failed: {e}")
+            
+            if attempt < max_retries - 1:
+                time.sleep(retry_delay * (attempt + 1))
+        
+        return False
     except Exception as e:
         print(f"Webhook notification failed: {e}")
         return False
