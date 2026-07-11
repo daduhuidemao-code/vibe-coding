@@ -3,7 +3,7 @@ import { ArticleCard } from '../components/ArticleCard';
 import { Pagination } from '../components/Pagination';
 import { getArticles, getSubscriptions, getGroups } from '../services/api';
 import { Article, Subscription, Group } from '../types';
-import { Filter, Loading } from 'lucide-react';
+import { Filter, Loader2 } from 'lucide-react';
 
 interface ArticlesPageProps {
   onArticleClick: (articleId: number) => void;
@@ -50,7 +50,7 @@ export function ArticlesPage({ onArticleClick }: ArticlesPageProps) {
   if (loading) {
     return (
       <div className="flex items-center justify-center py-20">
-        <Loading className="w-8 h-8 text-blue-600 animate-spin" />
+        <Loader2 className="w-8 h-8 text-blue-600 animate-spin" />
       </div>
     );
   }

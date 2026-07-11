@@ -2,7 +2,7 @@ import { useState, useEffect } from 'react';
 import { SubscriptionCard } from '../components/SubscriptionCard';
 import { getSubscriptions, getGroups } from '../services/api';
 import { Subscription, Group } from '../types';
-import { Folder, Loading } from 'lucide-react';
+import { Folder, Loader2 } from 'lucide-react';
 
 export function SubscriptionsPage() {
   const [subscriptions, setSubscriptions] = useState<Subscription[]>([]);
@@ -37,7 +37,7 @@ export function SubscriptionsPage() {
   if (loading) {
     return (
       <div className="flex items-center justify-center py-20">
-        <Loading className="w-8 h-8 text-blue-600 animate-spin" />
+        <Loader2 className="w-8 h-8 text-blue-600 animate-spin" />
       </div>
     );
   }

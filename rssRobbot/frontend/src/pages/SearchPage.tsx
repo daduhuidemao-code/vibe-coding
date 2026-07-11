@@ -2,7 +2,7 @@ import { useState, useEffect } from 'react';
 import { ArticleCard } from '../components/ArticleCard';
 import { searchArticles } from '../services/api';
 import { Article } from '../types';
-import { Search, Loading } from 'lucide-react';
+import { Search, Loader2 } from 'lucide-react';
 
 interface SearchPageProps {
   query: string;
@@ -39,7 +39,7 @@ export function SearchPage({ query, onArticleClick }: SearchPageProps) {
   if (loading) {
     return (
       <div className="flex items-center justify-center py-20">
-        <Loading className="w-8 h-8 text-blue-600 animate-spin" />
+        <Loader2 className="w-8 h-8 text-blue-600 animate-spin" />
       </div>
     );
   }
