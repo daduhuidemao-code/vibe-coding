@@ -1,13 +1,18 @@
-import { Rss, Search, List } from 'lucide-react';
+import { Rss, Search, List, Moon, Sun } from 'lucide-react';
+import { useTheme } from '../context/ThemeContext';
+
+type PageType = 'articles' | 'subscriptions' | 'search';
 
 interface HeaderProps {
-  currentPage: 'articles' | 'subscriptions' | 'search';
-  onPageChange: (page: 'articles' | 'subscriptions' | 'search') => void;
+  currentPage: PageType;
+  onPageChange: (page: PageType) => void;
   searchQuery: string;
   onSearchChange: (query: string) => void;
 }
 
 export function Header({ currentPage, onPageChange, searchQuery, onSearchChange }: HeaderProps) {
+  const { theme, toggleTheme } = useTheme();
+
   return (
     <header className="bg-gradient-to-r from-blue-600 to-indigo-700 text-white shadow-lg">
       <div className="max-w-6xl mx-auto px-4 py-4">
@@ -58,6 +63,18 @@ export function Header({ currentPage, onPageChange, searchQuery, onSearchChange 
                 className="pl-10 pr-4 py-2 rounded-lg bg-white/10 border border-white/20 text-white placeholder-white/60 focus:outline-none focus:bg-white/20 transition-colors"
               />
             </div>
+            
+            <button
+              onClick={toggleTheme}
+              className="p-2 rounded-lg bg-white/10 hover:bg-white/20 transition-colors"
+              title={theme === 'dark' ? '切换到浅色模式' : '切换到深色模式'}
+            >
+              {theme === 'dark' ? (
+                <Sun className="w-5 h-5" />
+              ) : (
+                <Moon className="w-5 h-5" />
+              )}
+            </button>
           </div>
         </div>
       </div>

@@ -28,3 +28,33 @@ body {
   -webkit-box-orient: vertical;
   overflow: hidden;
 }
+
+.dark .article-content {
+  color: #e5e7eb;
+}
+
+.dark .article-content a {
+  color: #60a5fa;
+}
+
+.dark .article-content h1,
+.dark .article-content h2,
+.dark .article-content h3,
+.dark .article-content h4,
+.dark .article-content h5,
+.dark .article-content h6 {
+  color: #f3f4f6;
+}
+
+.dark .article-content p {
+  color: #d1d5db;
+}
+
+.dark .article-content li {
+  color: #d1d5db;
+}
+
+.dark .article-content blockquote {
+  border-left-color: #60a5fa;
+  color: #9ca3af;
+}

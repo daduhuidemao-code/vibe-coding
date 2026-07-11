@@ -149,3 +149,46 @@ def search_articles(db: Session, query: str) -> List[Article]:
     return db.query(Article).filter(
         (Article.title.ilike(f"%{query}%")) | (Article.content.ilike(f"%{query}%")) | (Article.summary.ilike(f"%{query}%"))
     ).order_by(desc(Article.published_at)).all()
+
+
+def get_statistics(db: Session) -> dict:
+    total_articles = db.query(Article).count()
+    total_subscriptions = db.query(Subscription).count()
+    total_groups = db.query(Group).count()
+    enabled_subscriptions = db.query(Subscription).filter(Subscription.enabled == True).count()
+    
+    articles_by_subscription = db.query(
+        Subscription.id,
+        Subscription.title,
+        func.count(Article.id).label('article_count')
+    ).outerjoin(Article).group_by(Subscription.id, Subscription.title).order_by(desc(func.count(Article.id))).all()
+    
+    articles_by_group = db.query(
+        Group.id,
+        Group.name,
+        func.count(Article.id).label('article_count')
+    ).outerjoin(Subscription).outerjoin(Article).group_by(Group.id, Group.name).order_by(desc(func.count(Article.id))).all()
+    
+    recent_activity = db.query(
+        Article.published_at,
+        func.count(Article.id).label('count')
+    ).filter(Article.published_at.isnot(None)).group_by(Article.published_at).order_by(desc(Article.published_at)).limit(7).all()
+    
+    return {
+        'total_articles': total_articles,
+        'total_subscriptions': total_subscriptions,
+        'total_groups': total_groups,
+        'enabled_subscriptions': enabled_subscriptions,
+        'articles_by_subscription': [
+            {'id': s.id, 'title': s.title, 'count': s.article_count}
+            for s in articles_by_subscription
+        ],
+        'articles_by_group': [
+            {'id': g.id, 'name': g.name, 'count': g.article_count}
+            for g in articles_by_group
+        ],
+        'recent_activity': [
+            {'date': a.published_at.isoformat() if a.published_at else None, 'count': a.count}
+            for a in recent_activity
+        ]
+    }

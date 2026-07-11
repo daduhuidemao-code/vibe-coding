@@ -6,9 +6,10 @@ import { Search, Loading } from 'lucide-react';
 
 interface SearchPageProps {
   query: string;
+  onArticleClick?: (articleId: number) => void;
 }
 
-export function SearchPage({ query }: SearchPageProps) {
+export function SearchPage({ query, onArticleClick }: SearchPageProps) {
   const [articles, setArticles] = useState<Article[]>([]);
   const [loading, setLoading] = useState(false);
 
@@ -46,31 +47,31 @@ export function SearchPage({ query }: SearchPageProps) {
   return (
     <div className="max-w-4xl mx-auto">
       <div className="mb-6">
-        <h2 className="text-xl font-bold text-gray-800 flex items-center space-x-2">
+        <h2 className="text-xl font-bold text-gray-800 dark:text-gray-100 flex items-center space-x-2">
           <Search className="w-5 h-5" />
           <span>搜索结果</span>
           {query && (
-            <span className="text-gray-500 font-normal">: "{query}"</span>
+            <span className="text-gray-500 dark:text-gray-400 font-normal">: "{query}"</span>
           )}
         </h2>
-        <p className="text-gray-500 text-sm mt-1">
+        <p className="text-gray-500 dark:text-gray-400 text-sm mt-1">
           {articles.length > 0 ? `找到 ${articles.length} 篇相关文章` : '输入关键词开始搜索'}
         </p>
       </div>
 
       {!query.trim() ? (
-        <div className="text-center py-20 text-gray-500">
+        <div className="text-center py-20 text-gray-500 dark:text-gray-400">
           <Search className="w-16 h-16 mx-auto mb-4 opacity-50" />
           <p>请在顶部搜索框输入关键词</p>
         </div>
       ) : articles.length === 0 ? (
-        <div className="text-center py-20 text-gray-500">
+        <div className="text-center py-20 text-gray-500 dark:text-gray-400">
           <p>没有找到相关文章</p>
         </div>
       ) : (
         <div className="space-y-4">
           {articles.map((article) => (
-            <ArticleCard key={article.id} article={article} />
+            <ArticleCard key={article.id} article={article} onClick={() => onArticleClick?.(article.id)} />
           ))}
         </div>
       )}

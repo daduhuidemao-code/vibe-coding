@@ -36,17 +36,17 @@ export function Pagination({ page, pageSize, total, onPageChange }: PaginationPr
       <button
         onClick={() => onPageChange(1)}
         disabled={page === 1}
-        className="p-2 rounded-lg border border-gray-200 hover:bg-gray-50 disabled:opacity-50 disabled:cursor-not-allowed transition-colors"
+        className="p-2 rounded-lg border border-gray-200 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-700 disabled:opacity-50 disabled:cursor-not-allowed transition-colors"
       >
-        <SkipBack className="w-4 h-4" />
+        <SkipBack className="w-4 h-4 text-gray-600 dark:text-gray-300" />
       </button>
       
       <button
         onClick={() => onPageChange(page - 1)}
         disabled={page === 1}
-        className="p-2 rounded-lg border border-gray-200 hover:bg-gray-50 disabled:opacity-50 disabled:cursor-not-allowed transition-colors"
+        className="p-2 rounded-lg border border-gray-200 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-700 disabled:opacity-50 disabled:cursor-not-allowed transition-colors"
       >
-        <ChevronLeft className="w-4 h-4" />
+        <ChevronLeft className="w-4 h-4 text-gray-600 dark:text-gray-300" />
       </button>
       
       {getVisiblePages().map((item, index) => (
@@ -59,7 +59,7 @@ export function Pagination({ page, pageSize, total, onPageChange }: PaginationPr
             className={`px-4 py-2 rounded-lg border transition-colors ${
               item === page
                 ? 'bg-blue-600 text-white border-blue-600'
-                : 'border-gray-200 hover:bg-gray-50'
+                : 'border-gray-200 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-700 text-gray-800 dark:text-gray-100'
             }`}
           >
             {item}
@@ -70,20 +70,20 @@ export function Pagination({ page, pageSize, total, onPageChange }: PaginationPr
       <button
         onClick={() => onPageChange(page + 1)}
         disabled={page === totalPages}
-        className="p-2 rounded-lg border border-gray-200 hover:bg-gray-50 disabled:opacity-50 disabled:cursor-not-allowed transition-colors"
+        className="p-2 rounded-lg border border-gray-200 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-700 disabled:opacity-50 disabled:cursor-not-allowed transition-colors"
       >
-        <ChevronRight className="w-4 h-4" />
+        <ChevronRight className="w-4 h-4 text-gray-600 dark:text-gray-300" />
       </button>
       
       <button
         onClick={() => onPageChange(totalPages)}
         disabled={page === totalPages}
-        className="p-2 rounded-lg border border-gray-200 hover:bg-gray-50 disabled:opacity-50 disabled:cursor-not-allowed transition-colors"
+        className="p-2 rounded-lg border border-gray-200 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-700 disabled:opacity-50 disabled:cursor-not-allowed transition-colors"
       >
-        <SkipForward className="w-4 h-4" />
+        <SkipForward className="w-4 h-4 text-gray-600 dark:text-gray-300" />
       </button>
       
-      <span className="ml-4 text-sm text-gray-500">
+      <span className="ml-4 text-sm text-gray-500 dark:text-gray-400">
         共 {total} 条，每页 {pageSize} 条
       </span>
     </div>

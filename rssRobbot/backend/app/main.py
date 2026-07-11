@@ -1,7 +1,7 @@
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 from database import engine, Base
-from api import groups_router, subscriptions_router, articles_router
+from api import groups_router, subscriptions_router, articles_router, statistics_router
 from scheduler import start_scheduler, stop_scheduler, sync_all_feeds
 from config import get_cors_origins, get_groups, get_subscriptions
 from crud import create_group, update_group, create_subscription, update_subscription, get_group, get_subscription
@@ -23,6 +23,7 @@ app.add_middleware(
 app.include_router(groups_router)
 app.include_router(subscriptions_router)
 app.include_router(articles_router)
+app.include_router(statistics_router)
 
 
 def sync_config_to_db():
