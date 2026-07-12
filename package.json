@@ -1,0 +1,16 @@
+{
+  "name": "vibe-coding",
+  "version": "1.0.0",
+  "private": true,
+  "type": "module",
+  "workspaces": [
+    "packages/shared-types",
+    "packages/rssRobbot/frontend"
+  ],
+  "scripts": {
+    "install:all": "npm install",
+    "build:rssRobbot": "npm run build --workspace=@vibe-coding/rssRobbot-frontend",
+    "dev:rssRobbot": "npm run dev --workspace=@vibe-coding/rssRobbot-frontend",
+    "preview:rssRobbot": "npm run preview --workspace=@vibe-coding/rssRobbot-frontend"
+  }
+}

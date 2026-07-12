@@ -6,7 +6,7 @@ export default defineConfig({
   plugins: [react()],
   resolve: {
     alias: {
-      '@rss-robot/shared-types': path.resolve(__dirname, '../packages/shared-types/src')
+      '@vibe-coding/shared-types': path.resolve(__dirname, '../../shared-types/src')
     }
   },
   server: {

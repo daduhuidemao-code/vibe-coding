@@ -37,8 +37,8 @@ services:
 
   frontend:
     build:
-      context: .
-      dockerfile: frontend/Dockerfile
+      context: ../..
+      dockerfile: packages/rssRobbot/frontend/Dockerfile
     container_name: rss-frontend
     ports:
       - "3000:80"

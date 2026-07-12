@@ -17,7 +17,7 @@
     "noFallthroughCasesInSwitch": true,
     "baseUrl": ".",
     "paths": {
-      "@rss-robot/shared-types": ["../packages/shared-types/src"]
+      "@vibe-coding/shared-types": ["../../shared-types/src"]
     }
   },
   "include": ["src"]
