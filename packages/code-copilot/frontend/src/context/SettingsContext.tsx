@@ -24,12 +24,12 @@ const defaultSettings: AppSettings = {
   theme: 'dark',
   fontSize: 14,
   customBaseUrl: '',
-  customModels: []
+  customModels: [],
 };
 
 /**
  * SettingsProvider 组件
- * 
+ *
  * @description 提供应用设置状态管理，包括 API Key、模型配置、编辑器设置等
  * @param {Object} props - 组件属性
  * @param {ReactNode} props.children - 子组件
@@ -59,26 +59,28 @@ export const SettingsProvider = ({ children }: { children: ReactNode }) => {
 
   /**
    * 更新应用设置
-   * 
+   *
    * @param {Partial<AppSettings>} newSettings - 新的设置（部分更新）
    */
   const updateSettings = (newSettings: Partial<AppSettings>) => {
-    setSettings(prev => ({ ...prev, ...newSettings }));
+    setSettings((prev) => ({ ...prev, ...newSettings }));
   };
 
   /**
    * 是否已配置 API Key
-   * 
+   *
    * @type {boolean}
    */
   const isConfigured = !!settings.apiKey;
 
   return (
-    <SettingsContext.Provider value={{
-      settings,
-      updateSettings,
-      isConfigured
-    }}>
+    <SettingsContext.Provider
+      value={{
+        settings,
+        updateSettings,
+        isConfigured,
+      }}
+    >
       {children}
     </SettingsContext.Provider>
   );
@@ -86,7 +88,7 @@ export const SettingsProvider = ({ children }: { children: ReactNode }) => {
 
 /**
  * useSettings Hook
- * 
+ *
  * @description 获取应用设置上下文
  * @returns {SettingsContextType} 设置上下文
  * @throws {Error} 如果在 SettingsProvider 外部调用

@@ -12,7 +12,7 @@ interface SettingsPanelProps {
 
 /**
  * SettingsPanel 组件
- * 
+ *
  * @description 设置面板组件，支持云服务商选择、API Key 配置、模型选择、AI 参数调整、编辑器设置等功能
  * @param {SettingsPanelProps} props - 组件属性
  */
@@ -21,7 +21,7 @@ export const SettingsPanel = ({ onClose }: SettingsPanelProps) => {
 
   /**
    * 更新设置（泛型函数）
-   * 
+   *
    * @template K - AppSettings 的键类型
    * @param {K} key - 设置键名
    * @param {AppSettings[K]} value - 设置值
@@ -32,7 +32,7 @@ export const SettingsPanel = ({ onClose }: SettingsPanelProps) => {
 
   /**
    * 清除所有本地数据并刷新页面
-   * 
+   *
    * @description 清除 localStorage 中的配置、会话和聊天历史，然后刷新页面恢复默认状态
    */
   const handleClearData = () => {
@@ -45,7 +45,7 @@ export const SettingsPanel = ({ onClose }: SettingsPanelProps) => {
   /**
    * 当前选择的云服务商配置
    */
-  const currentProvider = providers.find(p => p.id === settings.provider);
+  const currentProvider = providers.find((p) => p.id === settings.provider);
 
   return (
     <div className="fixed inset-0 bg-black/50 flex items-center justify-center z-50">
@@ -63,7 +63,7 @@ export const SettingsPanel = ({ onClose }: SettingsPanelProps) => {
         <div className="space-y-6">
           <div>
             <h3 className="text-sm font-medium text-dark-400 mb-3">API 配置</h3>
-            
+
             <div className="space-y-4">
               <div>
                 <label className="block text-dark-400 text-sm mb-1">云服务商</label>
@@ -72,8 +72,10 @@ export const SettingsPanel = ({ onClose }: SettingsPanelProps) => {
                   onChange={(e) => handleChange('provider', e.target.value)}
                   className="w-full bg-dark-900 border border-dark-600 rounded-lg px-3 py-2 text-white outline-none focus:border-accent-500"
                 >
-                  {providers.map(provider => (
-                    <option key={provider.id} value={provider.id}>{provider.name}</option>
+                  {providers.map((provider) => (
+                    <option key={provider.id} value={provider.id}>
+                      {provider.name}
+                    </option>
                   ))}
                 </select>
               </div>
@@ -102,11 +104,21 @@ export const SettingsPanel = ({ onClose }: SettingsPanelProps) => {
                     />
                   </div>
                   <div>
-                    <label className="block text-dark-400 text-sm mb-1">自定义模型（逗号分隔）</label>
+                    <label className="block text-dark-400 text-sm mb-1">
+                      自定义模型（逗号分隔）
+                    </label>
                     <input
                       type="text"
                       value={settings.customModels.join(',')}
-                      onChange={(e) => handleChange('customModels', e.target.value.split(',').map(s => s.trim()).filter(Boolean))}
+                      onChange={(e) =>
+                        handleChange(
+                          'customModels',
+                          e.target.value
+                            .split(',')
+                            .map((s) => s.trim())
+                            .filter(Boolean),
+                        )
+                      }
                       placeholder="model-1, model-2"
                       className="w-full bg-dark-900 border border-dark-600 rounded-lg px-3 py-2 text-white placeholder-dark-500 outline-none focus:border-accent-500"
                     />
@@ -121,8 +133,13 @@ export const SettingsPanel = ({ onClose }: SettingsPanelProps) => {
                   onChange={(e) => handleChange('model', e.target.value)}
                   className="w-full bg-dark-900 border border-dark-600 rounded-lg px-3 py-2 text-white outline-none focus:border-accent-500"
                 >
-                  {(settings.provider === 'custom' ? settings.customModels : currentProvider?.models || []).map(model => (
-                    <option key={model} value={model}>{model}</option>
+                  {(settings.provider === 'custom'
+                    ? settings.customModels
+                    : currentProvider?.models || []
+                  ).map((model) => (
+                    <option key={model} value={model}>
+                      {model}
+                    </option>
                   ))}
                 </select>
               </div>
@@ -131,10 +148,12 @@ export const SettingsPanel = ({ onClose }: SettingsPanelProps) => {
 
           <div>
             <h3 className="text-sm font-medium text-dark-400 mb-3">AI 参数</h3>
-            
+
             <div className="space-y-4">
               <div>
-                <label className="block text-dark-400 text-sm mb-1">温度 (Temperature): {settings.temperature}</label>
+                <label className="block text-dark-400 text-sm mb-1">
+                  温度 (Temperature): {settings.temperature}
+                </label>
                 <input
                   type="range"
                   min="0"
@@ -146,7 +165,9 @@ export const SettingsPanel = ({ onClose }: SettingsPanelProps) => {
                 />
               </div>
               <div>
-                <label className="block text-dark-400 text-sm mb-1">最大 Token: {settings.maxTokens}</label>
+                <label className="block text-dark-400 text-sm mb-1">
+                  最大 Token: {settings.maxTokens}
+                </label>
                 <input
                   type="range"
                   min="512"
@@ -162,10 +183,12 @@ export const SettingsPanel = ({ onClose }: SettingsPanelProps) => {
 
           <div>
             <h3 className="text-sm font-medium text-dark-400 mb-3">编辑器设置</h3>
-            
+
             <div className="space-y-4">
               <div>
-                <label className="block text-dark-400 text-sm mb-1">字体大小: {settings.fontSize}px</label>
+                <label className="block text-dark-400 text-sm mb-1">
+                  字体大小: {settings.fontSize}px
+                </label>
                 <input
                   type="range"
                   min="12"

@@ -4,12 +4,45 @@
   "private": true,
   "type": "module",
   "workspaces": [
-    "packages/rssRobbot/frontend"
+    "packages/rssRobbot/frontend",
+    "packages/code-copilot/frontend"
   ],
   "scripts": {
     "install:all": "npm install",
     "build:rssRobbot": "npm run build --workspace=@vibe-coding/rssRobbot-frontend",
     "dev:rssRobbot": "npm run dev --workspace=@vibe-coding/rssRobbot-frontend",
-    "preview:rssRobbot": "npm run preview --workspace=@vibe-coding/rssRobbot-frontend"
+    "preview:rssRobbot": "npm run preview --workspace=@vibe-coding/rssRobbot-frontend",
+    "build:code-copilot": "npm run build --workspace=@vibe-coding/code-copilot-frontend",
+    "dev:code-copilot": "npm run dev --workspace=@vibe-coding/code-copilot-frontend",
+    "lint": "eslint .",
+    "lint:fix": "eslint . --fix",
+    "format": "prettier --write .",
+    "format:check": "prettier --check .",
+    "prepare": "husky"
+  },
+  "lint-staged": {
+    "*.{ts,tsx}": [
+      "eslint --fix",
+      "prettier --write"
+    ],
+    "*.{js,jsx}": [
+      "eslint --fix",
+      "prettier --write"
+    ],
+    "*.{json,yml,yaml}": [
+      "prettier --write"
+    ]
+  },
+  "devDependencies": {
+    "@typescript-eslint/eslint-plugin": "^8.63.0",
+    "@typescript-eslint/parser": "^8.63.0",
+    "eslint": "^9.39.5",
+    "eslint-config-prettier": "^10.1.8",
+    "eslint-import-resolver-node": "^0.4.0",
+    "eslint-plugin-react": "^7.37.5",
+    "eslint-plugin-react-hooks": "^7.1.1",
+    "husky": "^9.1.7",
+    "lint-staged": "^16.4.0",
+    "prettier": "^3.9.5"
   }
 }

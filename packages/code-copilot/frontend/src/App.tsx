@@ -9,7 +9,7 @@ import { SettingsPanel } from './components/SettingsPanel';
 
 /**
  * AppContent 组件
- * 
+ *
  * @description 主应用内容组件，包含布局结构和各子组件的组合
  */
 function AppContent() {
@@ -43,16 +43,14 @@ function AppContent() {
         <MonacoEditor />
         <ChatPanel />
       </div>
-      {showSettings && (
-        <SettingsPanel onClose={() => setShowSettings(false)} />
-      )}
+      {showSettings && <SettingsPanel onClose={() => setShowSettings(false)} />}
     </div>
   );
 }
 
 /**
  * App 组件
- * 
+ *
  * @description 根组件，提供 SettingsProvider 和 SessionProvider 上下文，包裹 AppContent 组件
  */
 function App() {

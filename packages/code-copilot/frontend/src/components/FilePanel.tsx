@@ -4,11 +4,20 @@ import { useSession } from '../context/SessionContext';
 
 /**
  * FilePanel 组件
- * 
+ *
  * @description 文件管理面板组件，支持文件列表显示、新建/重命名/删除文件、文件切换等功能
  */
 export const FilePanel = () => {
-  const { session, currentFile, setCurrentFile, addFile, deleteFile, renameFile, showNewFileModal, setShowNewFileModal } = useSession();
+  const {
+    session,
+    currentFile,
+    setCurrentFile,
+    addFile,
+    deleteFile,
+    renameFile,
+    showNewFileModal,
+    setShowNewFileModal,
+  } = useSession();
   const [newFileName, setNewFileName] = useState('');
   const [newFileLanguage, setNewFileLanguage] = useState('typescript');
   const [renamingId, setRenamingId] = useState<string | null>(null);
@@ -32,17 +41,17 @@ export const FilePanel = () => {
     { id: 'json', name: 'JSON' },
     { id: 'yaml', name: 'YAML' },
     { id: 'html', name: 'HTML' },
-    { id: 'css', name: 'CSS' }
+    { id: 'css', name: 'CSS' },
   ];
 
   /**
    * 处理新建文件
-   * 
+   *
    * @description 根据输入的文件名和选择的语言创建新文件，如果文件名没有扩展名则自动添加
    */
   const handleNewFile = () => {
     if (!newFileName.trim()) return;
-    const ext = languages.find(l => l.id === newFileLanguage)?.id || 'ts';
+    const ext = languages.find((l) => l.id === newFileLanguage)?.id || 'ts';
     const name = newFileName.includes('.') ? newFileName : `${newFileName}.${ext}`;
     addFile(name, '', newFileLanguage);
     setNewFileName('');
@@ -51,7 +60,7 @@ export const FilePanel = () => {
 
   /**
    * 处理重命名文件
-   * 
+   *
    * @param {string} id - 文件 ID
    */
   const handleRename = (id: string) => {
@@ -80,7 +89,7 @@ export const FilePanel = () => {
 
       <div className="flex-1 overflow-y-auto p-2">
         <div className="space-y-1">
-          {session.files.map(file => (
+          {session.files.map((file) => (
             <div
               key={file.id}
               className={`group flex items-center gap-2 px-2 py-1.5 rounded-lg cursor-pointer transition-colors ${
@@ -157,8 +166,10 @@ export const FilePanel = () => {
                   onChange={(e) => setNewFileLanguage(e.target.value)}
                   className="w-full bg-dark-900 border border-dark-600 rounded-lg px-3 py-2 text-white outline-none focus:border-accent-500"
                 >
-                  {languages.map(lang => (
-                    <option key={lang.id} value={lang.id}>{lang.name}</option>
+                  {languages.map((lang) => (
+                    <option key={lang.id} value={lang.id}>
+                      {lang.name}
+                    </option>
                   ))}
                 </select>
               </div>

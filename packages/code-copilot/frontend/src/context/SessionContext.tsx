@@ -30,12 +30,13 @@ const defaultSession: Session = {
     {
       id: '1',
       name: 'main.ts',
-      content: '// 在此开始编写代码\n\nfunction greet(name: string): string {\n  return `Hello, ${name}!`;\n}\n\nconst message = greet("World");\nconsole.log(message);',
-      language: 'typescript'
-    }
+      content:
+        '// 在此开始编写代码\n\nfunction greet(name: string): string {\n  return `Hello, ${name}!`;\n}\n\nconst message = greet("World");\nconsole.log(message);',
+      language: 'typescript',
+    },
   ],
   currentFileId: '1',
-  createdAt: new Date()
+  createdAt: new Date(),
 };
 
 /**
@@ -45,7 +46,7 @@ const defaultChatHistory: ChatMessage[] = [];
 
 /**
  * SessionProvider 组件
- * 
+ *
  * @description 提供会话状态管理，包括文件列表、当前文件、聊天历史等
  * @param {Object} props - 组件属性
  * @param {ReactNode} props.children - 子组件
@@ -89,11 +90,11 @@ export const SessionProvider = ({ children }: { children: ReactNode }) => {
   /**
    * 当前编辑的文件
    */
-  const currentFile = session.files.find(f => f.id === session.currentFileId) || null;
+  const currentFile = session.files.find((f) => f.id === session.currentFileId) || null;
 
   /**
    * 添加新文件
-   * 
+   *
    * @param {string} name - 文件名
    * @param {string} content - 文件内容
    * @param {string} language - 编程语言
@@ -103,83 +104,77 @@ export const SessionProvider = ({ children }: { children: ReactNode }) => {
       id: Date.now().toString(),
       name,
       content,
-      language
+      language,
     };
-    setSession(prev => ({
+    setSession((prev) => ({
       ...prev,
       files: [...prev.files, newFile],
-      currentFileId: newFile.id
+      currentFileId: newFile.id,
     }));
   };
 
   /**
    * 删除文件
-   * 
+   *
    * @param {string} id - 文件 ID
    */
   const deleteFile = (id: string) => {
-    setSession(prev => {
-      const newFiles = prev.files.filter(f => f.id !== id);
-      const newCurrentId = prev.currentFileId === id 
-        ? newFiles[0]?.id || '' 
-        : prev.currentFileId;
+    setSession((prev) => {
+      const newFiles = prev.files.filter((f) => f.id !== id);
+      const newCurrentId = prev.currentFileId === id ? newFiles[0]?.id || '' : prev.currentFileId;
       return {
         ...prev,
         files: newFiles,
-        currentFileId: newCurrentId
+        currentFileId: newCurrentId,
       };
     });
   };
 
   /**
    * 更新文件内容
-   * 
+   *
    * @param {string} id - 文件 ID
    * @param {string} content - 新的文件内容
    */
   const updateFile = (id: string, content: string) => {
-    setSession(prev => ({
+    setSession((prev) => ({
       ...prev,
-      files: prev.files.map(f => 
-        f.id === id ? { ...f, content } : f
-      )
+      files: prev.files.map((f) => (f.id === id ? { ...f, content } : f)),
     }));
   };
 
   /**
    * 重命名文件
-   * 
+   *
    * @param {string} id - 文件 ID
    * @param {string} newName - 新文件名
    */
   const renameFile = (id: string, newName: string) => {
-    setSession(prev => ({
+    setSession((prev) => ({
       ...prev,
-      files: prev.files.map(f => 
-        f.id === id ? { ...f, name: newName } : f
-      )
+      files: prev.files.map((f) => (f.id === id ? { ...f, name: newName } : f)),
     }));
   };
 
   /**
    * 设置当前编辑的文件
-   * 
+   *
    * @param {string} id - 文件 ID
    */
   const setCurrentFile = (id: string) => {
-    setSession(prev => ({
+    setSession((prev) => ({
       ...prev,
-      currentFileId: id
+      currentFileId: id,
     }));
   };
 
   /**
    * 添加聊天消息
-   * 
+   *
    * @param {ChatMessage} message - 聊天消息
    */
   const addChatMessage = (message: ChatMessage) => {
-    setChatHistory(prev => [...prev, message]);
+    setChatHistory((prev) => [...prev, message]);
   };
 
   /**
@@ -190,20 +185,22 @@ export const SessionProvider = ({ children }: { children: ReactNode }) => {
   };
 
   return (
-    <SessionContext.Provider value={{
-      session,
-      chatHistory,
-      currentFile,
-      showNewFileModal,
-      addFile,
-      deleteFile,
-      updateFile,
-      renameFile,
-      setCurrentFile,
-      addChatMessage,
-      clearChatHistory,
-      setShowNewFileModal
-    }}>
+    <SessionContext.Provider
+      value={{
+        session,
+        chatHistory,
+        currentFile,
+        showNewFileModal,
+        addFile,
+        deleteFile,
+        updateFile,
+        renameFile,
+        setCurrentFile,
+        addChatMessage,
+        clearChatHistory,
+        setShowNewFileModal,
+      }}
+    >
       {children}
     </SessionContext.Provider>
   );
@@ -211,7 +208,7 @@ export const SessionProvider = ({ children }: { children: ReactNode }) => {
 
 /**
  * useSession Hook
- * 
+ *
  * @description 获取会话上下文
  * @returns {SessionContextType} 会话上下文
  * @throws {Error} 如果在 SessionProvider 外部调用

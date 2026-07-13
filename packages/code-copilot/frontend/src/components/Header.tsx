@@ -13,7 +13,7 @@ interface HeaderProps {
 
 /**
  * Header 组件
- * 
+ *
  * @description 顶部导航栏组件，包含应用标题、当前文件名、新建文件按钮、保存按钮、主题切换按钮和设置按钮
  * @param {HeaderProps} props - 组件属性
  */
@@ -35,11 +35,7 @@ export const Header = ({ onNewFile, onSave, onOpenSettings }: HeaderProps) => {
           <Code2 className="w-6 h-6 text-accent-400" />
           <span className="font-bold text-white text-lg">Code Copilot</span>
         </div>
-        {currentFile && (
-          <span className="text-dark-600 text-sm ml-4">
-            {currentFile.name}
-          </span>
-        )}
+        {currentFile && <span className="text-dark-600 text-sm ml-4">{currentFile.name}</span>}
       </div>
 
       <div className="flex items-center gap-2">
@@ -61,11 +57,7 @@ export const Header = ({ onNewFile, onSave, onOpenSettings }: HeaderProps) => {
           onClick={toggleTheme}
           className="flex items-center gap-2 px-3 py-2 text-dark-400 hover:text-white hover:bg-dark-700 rounded-lg transition-colors"
         >
-          {settings.theme === 'dark' ? (
-            <Sun className="w-4 h-4" />
-          ) : (
-            <Moon className="w-4 h-4" />
-          )}
+          {settings.theme === 'dark' ? <Sun className="w-4 h-4" /> : <Moon className="w-4 h-4" />}
         </button>
         <button
           onClick={onOpenSettings}

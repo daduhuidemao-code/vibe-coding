@@ -7,7 +7,7 @@ import { getAIService } from '../services/aiService';
 
 /**
  * MonacoEditor 组件
- * 
+ *
  * @description 集成 Monaco Editor 的代码编辑器组件，支持语法高亮、AI 代码补全、主题切换、字体大小调整等功能
  */
 export const MonacoEditor = () => {
@@ -18,7 +18,7 @@ export const MonacoEditor = () => {
 
   /**
    * 注册 AI 代码补全提供器
-   * 
+   *
    * @description 当 Monaco Editor 初始化完成后，注册自定义代码补全提供器，支持多种编程语言
    */
   useEffect(() => {
@@ -35,7 +35,7 @@ export const MonacoEditor = () => {
           startLineNumber: 1,
           startColumn: 1,
           endLineNumber: position.lineNumber,
-          endColumn: position.column
+          endColumn: position.column,
         });
 
         const language = model.getLanguageId();
@@ -60,22 +60,33 @@ export const MonacoEditor = () => {
                   startLineNumber: position.lineNumber,
                   startColumn: position.column,
                   endLineNumber: position.lineNumber,
-                  endColumn: position.column
-                }
-              }
-            ]
+                  endColumn: position.column,
+                },
+              },
+            ],
           };
         } catch {
           return { suggestions: [] };
         }
-      }
+      },
     };
 
     /**
      * 支持的编程语言列表
      */
-    const languages = ['typescript', 'javascript', 'python', 'java', 'go', 'cpp', 'csharp', 'rust', 'php', 'ruby'];
-    languages.forEach(lang => {
+    const languages = [
+      'typescript',
+      'javascript',
+      'python',
+      'java',
+      'go',
+      'cpp',
+      'csharp',
+      'rust',
+      'php',
+      'ruby',
+    ];
+    languages.forEach((lang) => {
       monaco.languages.registerCompletionItemProvider(lang, provider);
     });
 
@@ -83,9 +94,9 @@ export const MonacoEditor = () => {
      * 清理函数：移除代码补全提供器
      */
     return () => {
-      languages.forEach(lang => {
+      languages.forEach((lang) => {
         monaco.languages.registerCompletionItemProvider(lang, {
-          provideCompletionItems: () => ({ suggestions: [] })
+          provideCompletionItems: () => ({ suggestions: [] }),
         });
       });
     };
@@ -93,19 +104,22 @@ export const MonacoEditor = () => {
 
   /**
    * 处理编辑器内容变化（防抖）
-   * 
+   *
    * @param {string | undefined} value - 编辑器内容
    */
-  const handleChange = useCallback((value: string | undefined) => {
-    if (value !== undefined && currentFile) {
-      if (debounceTimerRef.current) {
-        clearTimeout(debounceTimerRef.current);
+  const handleChange = useCallback(
+    (value: string | undefined) => {
+      if (value !== undefined && currentFile) {
+        if (debounceTimerRef.current) {
+          clearTimeout(debounceTimerRef.current);
+        }
+        debounceTimerRef.current = setTimeout(() => {
+          updateFile(currentFile.id, value);
+        }, 500);
       }
-      debounceTimerRef.current = setTimeout(() => {
-        updateFile(currentFile.id, value);
-      }, 500);
-    }
-  }, [currentFile, updateFile]);
+    },
+    [currentFile, updateFile],
+  );
 
   /**
    * 组件卸载时清理定时器
@@ -157,11 +171,11 @@ export const MonacoEditor = () => {
           quickSuggestions: {
             other: true,
             comments: false,
-            strings: false
+            strings: false,
           },
           suggestOnTriggerCharacters: true,
           acceptSuggestionOnEnter: 'on',
-          suggestSelection: 'first'
+          suggestSelection: 'first',
         }}
       />
     </div>
