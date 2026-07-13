@@ -1,3 +1,6 @@
+/**
+ * 文件接口定义
+ */
 export interface File {
   id: string;
   name: string;
@@ -5,6 +8,9 @@ export interface File {
   language: string;
 }
 
+/**
+ * 会话接口定义
+ */
 export interface Session {
   id: string;
   files: File[];
@@ -12,6 +18,9 @@ export interface Session {
   createdAt: Date;
 }
 
+/**
+ * 聊天消息接口定义
+ */
 export interface ChatMessage {
   id: string;
   role: 'user' | 'assistant' | 'system';
@@ -19,6 +28,9 @@ export interface ChatMessage {
   timestamp: Date;
 }
 
+/**
+ * 云服务商接口定义
+ */
 export interface CloudProvider {
   id: string;
   name: string;
@@ -29,6 +41,9 @@ export interface CloudProvider {
   chatEndpoint: string;
 }
 
+/**
+ * 应用设置接口定义
+ */
 export interface AppSettings {
   provider: string;
   apiKey: string;
@@ -41,6 +56,9 @@ export interface AppSettings {
   customModels: string[];
 }
 
+/**
+ * 代码补全请求接口定义
+ */
 export interface CompletionRequest {
   model: string;
   prompt: string;
@@ -48,6 +66,9 @@ export interface CompletionRequest {
   temperature: number;
 }
 
+/**
+ * 代码补全响应接口定义
+ */
 export interface CompletionResponse {
   id: string;
   choices: {
@@ -60,6 +81,9 @@ export interface CompletionResponse {
   };
 }
 
+/**
+ * 聊天请求接口定义
+ */
 export interface ChatRequest {
   model: string;
   messages: {
@@ -71,6 +95,9 @@ export interface ChatRequest {
   max_tokens?: number;
 }
 
+/**
+ * 聊天响应接口定义
+ */
 export interface ChatResponse {
   id: string;
   choices: {
@@ -81,6 +108,9 @@ export interface ChatResponse {
   }[];
 }
 
+/**
+ * 流式响应块接口定义
+ */
 export interface StreamChunk {
   id: string;
   choices: {

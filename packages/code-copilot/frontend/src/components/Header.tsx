@@ -2,16 +2,28 @@ import { Code2, Settings, Plus, Save, Moon, Sun } from 'lucide-react';
 import { useSettings } from '../context/SettingsContext';
 import { useSession } from '../context/SessionContext';
 
+/**
+ * Header 组件属性定义
+ */
 interface HeaderProps {
   onNewFile: () => void;
   onSave: () => void;
   onOpenSettings: () => void;
 }
 
+/**
+ * Header 组件
+ * 
+ * @description 顶部导航栏组件，包含应用标题、当前文件名、新建文件按钮、保存按钮、主题切换按钮和设置按钮
+ * @param {HeaderProps} props - 组件属性
+ */
 export const Header = ({ onNewFile, onSave, onOpenSettings }: HeaderProps) => {
   const { settings, updateSettings } = useSettings();
   const { currentFile } = useSession();
 
+  /**
+   * 切换主题（深色/浅色）
+   */
   const toggleTheme = () => {
     updateSettings({ theme: settings.theme === 'dark' ? 'light' : 'dark' });
   };

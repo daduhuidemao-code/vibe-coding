@@ -2,14 +2,21 @@ import { useState } from 'react';
 import { FileCode, Folder, Plus, Trash2, Edit3, ChevronRight } from 'lucide-react';
 import { useSession } from '../context/SessionContext';
 
+/**
+ * FilePanel 组件
+ * 
+ * @description 文件管理面板组件，支持文件列表显示、新建/重命名/删除文件、文件切换等功能
+ */
 export const FilePanel = () => {
-  const { session, currentFile, setCurrentFile, addFile, deleteFile, renameFile } = useSession();
-  const [showNewFileModal, setShowNewFileModal] = useState(false);
+  const { session, currentFile, setCurrentFile, addFile, deleteFile, renameFile, showNewFileModal, setShowNewFileModal } = useSession();
   const [newFileName, setNewFileName] = useState('');
   const [newFileLanguage, setNewFileLanguage] = useState('typescript');
   const [renamingId, setRenamingId] = useState<string | null>(null);
   const [renameName, setRenameName] = useState('');
 
+  /**
+   * 支持的编程语言列表
+   */
   const languages = [
     { id: 'typescript', name: 'TypeScript' },
     { id: 'javascript', name: 'JavaScript' },
@@ -28,6 +35,11 @@ export const FilePanel = () => {
     { id: 'css', name: 'CSS' }
   ];
 
+  /**
+   * 处理新建文件
+   * 
+   * @description 根据输入的文件名和选择的语言创建新文件，如果文件名没有扩展名则自动添加
+   */
   const handleNewFile = () => {
     if (!newFileName.trim()) return;
     const ext = languages.find(l => l.id === newFileLanguage)?.id || 'ts';
@@ -37,6 +49,11 @@ export const FilePanel = () => {
     setShowNewFileModal(false);
   };
 
+  /**
+   * 处理重命名文件
+   * 
+   * @param {string} id - 文件 ID
+   */
   const handleRename = (id: string) => {
     if (!renameName.trim()) return;
     renameFile(id, renameName);

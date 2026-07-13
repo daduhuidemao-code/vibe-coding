@@ -3,17 +3,38 @@ import { useSettings } from '../context/SettingsContext';
 import { providers } from '../services/providers';
 import { AppSettings } from '../types';
 
+/**
+ * SettingsPanel 组件属性定义
+ */
 interface SettingsPanelProps {
   onClose: () => void;
 }
 
+/**
+ * SettingsPanel 组件
+ * 
+ * @description 设置面板组件，支持云服务商选择、API Key 配置、模型选择、AI 参数调整、编辑器设置等功能
+ * @param {SettingsPanelProps} props - 组件属性
+ */
 export const SettingsPanel = ({ onClose }: SettingsPanelProps) => {
   const { settings, updateSettings } = useSettings();
 
+  /**
+   * 更新设置（泛型函数）
+   * 
+   * @template K - AppSettings 的键类型
+   * @param {K} key - 设置键名
+   * @param {AppSettings[K]} value - 设置值
+   */
   const handleChange = <K extends keyof AppSettings>(key: K, value: AppSettings[K]) => {
     updateSettings({ [key]: value } as Partial<AppSettings>);
   };
 
+  /**
+   * 清除所有本地数据并刷新页面
+   * 
+   * @description 清除 localStorage 中的配置、会话和聊天历史，然后刷新页面恢复默认状态
+   */
   const handleClearData = () => {
     localStorage.removeItem('code-copilot-settings');
     localStorage.removeItem('code-copilot-session');
@@ -21,6 +42,9 @@ export const SettingsPanel = ({ onClose }: SettingsPanelProps) => {
     window.location.reload();
   };
 
+  /**
+   * 当前选择的云服务商配置
+   */
   const currentProvider = providers.find(p => p.id === settings.provider);
 
   return (

@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { SessionProvider } from './context/SessionContext';
+import { SessionProvider, useSession } from './context/SessionContext';
 import { SettingsProvider } from './context/SettingsContext';
 import { Header } from './components/Header';
 import { FilePanel } from './components/FilePanel';
@@ -7,13 +7,26 @@ import { MonacoEditor } from './components/MonacoEditor';
 import { ChatPanel } from './components/ChatPanel';
 import { SettingsPanel } from './components/SettingsPanel';
 
+/**
+ * AppContent 组件
+ * 
+ * @description 主应用内容组件，包含布局结构和各子组件的组合
+ */
 function AppContent() {
+  /** 设置面板显示状态 */
   const [showSettings, setShowSettings] = useState(false);
+  const { setShowNewFileModal } = useSession();
 
+  /**
+   * 处理新建文件按钮点击
+   */
   const handleNewFile = () => {
-    console.log('新建文件');
+    setShowNewFileModal(true);
   };
 
+  /**
+   * 处理保存按钮点击
+   */
   const handleSave = () => {
     console.log('保存');
   };
@@ -37,6 +50,11 @@ function AppContent() {
   );
 }
 
+/**
+ * App 组件
+ * 
+ * @description 根组件，提供 SettingsProvider 和 SessionProvider 上下文，包裹 AppContent 组件
+ */
 function App() {
   return (
     <SettingsProvider>

@@ -5,6 +5,11 @@ import { useSettings } from '../context/SettingsContext';
 import { useChat } from '../hooks/useChat';
 import { ChatMessage } from '../types';
 
+/**
+ * ChatPanel 组件
+ * 
+ * @description AI 聊天面板组件，支持发送消息、流式响应显示、Markdown 渲染、代码复制等功能
+ */
 export const ChatPanel = () => {
   const { chatHistory, addChatMessage, clearChatHistory, currentFile } = useSession();
   const { isConfigured } = useSettings();
@@ -14,10 +19,18 @@ export const ChatPanel = () => {
   const [copiedId, setCopiedId] = useState<string | null>(null);
   const messagesEndRef = useRef<HTMLDivElement>(null);
 
+  /**
+   * 自动滚动到最新消息
+   */
   useEffect(() => {
     messagesEndRef.current?.scrollIntoView({ behavior: 'smooth' });
   }, [chatHistory, isTyping]);
 
+  /**
+   * 发送消息处理函数
+   * 
+   * @description 将用户消息添加到聊天历史，构建包含当前文件上下文的消息列表，调用 AI 服务获取响应
+   */
   const handleSend = async () => {
     if (!input.trim() || !isConfigured) return;
 
@@ -32,12 +45,18 @@ export const ChatPanel = () => {
     setInput('');
     setIsTyping(true);
 
+    /**
+     * 构建消息列表，包含历史消息和当前用户消息
+     */
     const messages = chatHistory.map(msg => ({
       role: msg.role,
       content: msg.content
     }));
     messages.push({ role: 'user', content: input });
 
+    /**
+     * 如果有当前文件，在消息开头添加系统消息，包含文件信息
+     */
     if (currentFile) {
       messages.unshift({
         role: 'system',
@@ -65,6 +84,11 @@ export const ChatPanel = () => {
     }
   };
 
+  /**
+   * 键盘事件处理（Enter 发送消息）
+   * 
+   * @param {React.KeyboardEvent} e - 键盘事件
+   */
   const handleKeyDown = (e: React.KeyboardEvent) => {
     if (e.key === 'Enter' && !e.shiftKey) {
       e.preventDefault();
@@ -72,12 +96,24 @@ export const ChatPanel = () => {
     }
   };
 
+  /**
+   * 复制消息内容到剪贴板
+   * 
+   * @param {string} content - 要复制的内容
+   * @param {string} id - 消息 ID（用于显示复制成功状态）
+   */
   const handleCopy = (content: string, id: string) => {
     navigator.clipboard.writeText(content);
     setCopiedId(id);
     setTimeout(() => setCopiedId(null), 2000);
   };
 
+  /**
+   * 格式化消息内容（简单的 Markdown 渲染）
+   * 
+   * @param {string} content - 原始内容
+   * @returns {string} 格式化后的 HTML
+   */
   const formatContent = (content: string) => {
     return content
       .replace(/```(\w+)?\n/g, '<pre><code class="language-$1">')
